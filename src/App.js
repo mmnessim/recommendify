@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Profile from './components/profile';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -35,8 +36,7 @@ function App() {
       <button onClick={handleLogout}>Logout</button>
       { profile &&
       <div>
-        <h1>{profile.displayName}</h1>
-        <img src={profile.photos[0]} alt="profile pic" />
+        <Profile profile={profile} token={token} />
       </div>
        }
     </div>
