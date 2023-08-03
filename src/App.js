@@ -32,8 +32,11 @@ function App() {
 
   return (
     <div className="App">
-      <button><a href='http://localhost:3001/auth/spotify'>Click Me</a></button>
-      <button onClick={handleLogout}>Logout</button>
+      <div classname="navbar navbar-inverse navbar-fixed-top" id='nav'>
+        <button className='btn' ><a href='http://localhost:3001/auth/spotify'>Click Me</a></button>
+        <button className='btn' onClick={handleLogout}>Logout</button>
+      </div>
+
       { profile &&
       <div>
         <Profile profile={profile} token={token} />
