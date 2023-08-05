@@ -30,12 +30,17 @@ function App() {
       })
   }
 
+  function handleLogin() {
+    window.location.href = 'http://localhost:3001/auth/spotify';
+  }
+
   return (
     <div className="App">
       <div classname="navbar navbar-inverse navbar-fixed-top" id='nav'>
-        <button className='btn' ><a href='http://localhost:3001/auth/spotify'>Click Me</a></button>
+        <button className='btn' onClick={handleLogin}>Login with Spotify</button>
         <button className='btn' onClick={handleLogout}>Logout</button>
       </div>
+      <div className="jumbotron"><h1>Recommendify</h1></div>
 
       { profile &&
       <div>
