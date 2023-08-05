@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import FetchRec from "./fetchRec";
 
 export default function Recommendations(props) {
     const [artistID, setArtistID] = useState(null);
@@ -26,6 +27,7 @@ export default function Recommendations(props) {
             { artistID &&
             <div>
                 <p>{artistID}</p>
+                <FetchRec token={props.token} artistID={artistID} />
             </div>
             }
         </div>
