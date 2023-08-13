@@ -23,10 +23,10 @@ export default function Recommendations(props) {
         <div>
             <h1>Get Recommendations by Artist</h1>
             <input type="text" placeholder = "Enter an artist" onChange={(e) => setQuery(e.target.value)} />
-            <button onClick={getID}>Get Recommendations</button>
+            <br />
+            <button className="btn" onClick={getID}>Get Recommendations</button>
             { artistID &&
             <div>
-                <p>{artistID}</p>
                 <FetchRec token={props.token} artistID={artistID} />
             </div>
             }

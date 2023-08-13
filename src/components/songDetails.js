@@ -4,6 +4,7 @@ import { keyDisplay } from '../helper/key';
 export function SongDetails(props) {
     const [details, setDetails] = useState(null);
     const [key, setKey] = useState(null);
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         fetch('https://api.spotify.com/v1/audio-features/' + props.song.id, {
@@ -28,7 +29,8 @@ export function SongDetails(props) {
 
     return (
         <div className='song-details'>
-            {details &&
+            <button className='btn' onClick={() => setShow(!show)}>Show Details</button>
+            {details && show &&
             <div>
                 <p>Tempo: {details.tempo}</p>
                 <p>Key: {key}</p>

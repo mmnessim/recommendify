@@ -5,7 +5,10 @@ export default function Profile(props) {
     return (
         <div>
         <h1>{props.profile.displayName}</h1>
-        <img src={props.profile.photos[0]} alt="profile pic" />
+        {
+            props.profile.images &&
+            <img src={props.profile.images[0].url} alt="profile pic" />
+        }
         <Recommendations token={props.token} />
         </div>
     );
