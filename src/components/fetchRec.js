@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-
+import { SongDetails } from './songDetails';
 
 
 export default function FetchRec(props) {
@@ -25,10 +25,10 @@ export default function FetchRec(props) {
             setDisplay(recs.map((rec, index) => {
                 return (
                     <div key={index} className='rec-item'>
-                        <p>{rec.name}</p>
+                        <h3>{rec.name} by {rec.artists[0].name}</h3>
                         <img src={rec.album.images[0].url} alt="album art" className='pic-sm' />
                         <audio controls src={rec.preview_url} />
-                        <p>{rec.artists[0].name}</p>
+                        <SongDetails song={rec} token={props.token} />
                     </div>
                 )
             }))
