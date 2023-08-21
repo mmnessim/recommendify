@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Profile from './components/profile';
 
+
 function App() {
   const [token, setToken] = useState(null);
   const [profile, setProfile] = useState(null);
@@ -41,7 +42,6 @@ function App() {
         <button className='btn' onClick={handleLogout}>Logout</button>
       </div>
       <div className="jumbotron"><h1>Recommendify</h1></div>
-
       { profile &&
       <div>
         <Profile profile={profile} token={token} />
