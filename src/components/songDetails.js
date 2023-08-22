@@ -14,7 +14,7 @@ export function SongDetails(props) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 setDetails(data);
             })
             .catch(err => console.log(err));

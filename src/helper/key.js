@@ -39,6 +39,6 @@ export function keyDisplay(details) {
         default:
             details.key = 'N/A';
     }
-    console.log(details.key)
+    //console.log(details.key)
     return details.key;
 }

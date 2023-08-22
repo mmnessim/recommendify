@@ -1,5 +1,6 @@
 import React from "react";
 import Recommendations from "./recommendations";
+import CreatePlaylist from "./createPlaylist";
 
 export default function Profile(props) {
     return (
@@ -16,7 +17,7 @@ export default function Profile(props) {
                     <Recommendations token={props.token} />
                 </div>
                 <div className="col-sm">
-                    <h1>Hello</h1>
+                    <CreatePlaylist token={props.token} profile={props.profile} />
                 </div>
             </div>
 
