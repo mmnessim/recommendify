@@ -5,6 +5,14 @@ export default function AddToPlaylist(props) {
     const [playlist, setPlaylist] = useState(null);
     const [display, setDisplay] = useState(null);
     const [selected, setSelected] = useState(null); 
+    const [playlistID, setPlaylistID] = useState(null);
+
+    function handleClick(index) {
+        console.log(index)
+        //setPlaylistID(playlist[index].id);
+        console.log("playlist" + playlist)
+        setSelected(true);
+    }
 
     function getPlaylist() {
         fetch('https://api.spotify.com/v1/me/playlists', {
@@ -14,13 +22,13 @@ export default function AddToPlaylist(props) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                setPlaylist(data);
+                console.log("Data" + data.items);
+                setPlaylist(data.items);
                 setDisplay(data.items.map((item, index) => {
                     return (
                         <div key={index} className='playlists'>
                             <a className='' href={item.external_urls.spotify} target="_blank" rel="noreferrer">{item.name}   </a>
-                            <button className='btn' onClick={() => setSelected(true)}>+</button>
+                            <button className='btn' onClick={() => {handleClick(index)}}>+</button>
                         </div>
                     )
                 }));
