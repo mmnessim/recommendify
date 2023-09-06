@@ -4,13 +4,14 @@ import SelectPlaylist from './selectPlaylist';
 export default function AddToPlaylist(props) {
     const [playlist, setPlaylist] = useState(null);
     const [display, setDisplay] = useState(null);
-    const [selected, setSelected] = useState(null); 
+    const [selected, setSelected] = useState(null);
     const [playlistID, setPlaylistID] = useState(null);
 
     function handleClick(index) {
         console.log(index)
         //setPlaylistID(playlist[index].id);
-        console.log("playlist" + playlist)
+        console.log(playlist.items[index])
+        setPlaylistID(playlist.items[index].id);
         setSelected(true);
     }
 
@@ -23,15 +24,16 @@ export default function AddToPlaylist(props) {
             .then(res => res.json())
             .then(data => {
                 console.log("Data" + data.items);
-                setPlaylist(data.items);
-                setDisplay(data.items.map((item, index) => {
+                setPlaylist(data);
+                /*
+                setDisplay(playlist.items.map((item, index) => {
                     return (
                         <div key={index} className='playlists'>
                             <a className='' href={item.external_urls.spotify} target="_blank" rel="noreferrer">{item.name}   </a>
                             <button className='btn' onClick={() => {handleClick(index)}}>+</button>
                         </div>
                     )
-                }));
+                }));*/
             })
             .catch(err => console.log(err));
     }
@@ -39,6 +41,19 @@ export default function AddToPlaylist(props) {
     useEffect(() => {
         getPlaylist();
     }, []);
+
+    useEffect(() => {
+        if (playlist) {
+        setDisplay(playlist.items.map((item, index) => {
+            return (
+                <div key={index} className='playlists'>
+                    <a className='' href={item.external_urls.spotify} target="_blank" rel="noreferrer">{item.name}   </a>
+                    <button className='btn' onClick={() => {handleClick(index)}}>+</button>
+                </div>
+            )
+        }));
+    }
+    }, [playlist]);
 
 
     return (
@@ -49,7 +64,7 @@ export default function AddToPlaylist(props) {
             {selected &&
             <div>
                 <button onClick={() => setSelected(false)}>Back</button>
-                <SelectPlaylist />
+                <SelectPlaylist token={props.token} profile={props.profile} playlistID={playlistID}/>
             </div>
             }
         </div>
