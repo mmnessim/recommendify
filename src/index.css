@@ -53,3 +53,10 @@ a:hover {
   background-color: rgb(107, 104, 104)
 ;}
 
+.playlists {
+  max-height: 2.5rem;
+  background-color:beige;
+  margin: 10px;
+  text-align: center;
+  align-items: center;
+}
