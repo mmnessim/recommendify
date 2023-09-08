@@ -7,7 +7,9 @@ export default function AddToPlaylist(props) {
     const [display, setDisplay] = useState(null);
     const [selected, setSelected] = useState(null);
     const [playlistID, setPlaylistID] = useState(null);
+    //Variables from store
     const profile = store.getState().profile;
+    const token = store.getState().token.token;
 
     const handleClick = useCallback((index) => {
         //console.log(index)
@@ -28,7 +30,6 @@ export default function AddToPlaylist(props) {
             .then(data => {
                 console.log("Data" + data.items);
                 setPlaylist(data);
-                
                 setDisplay(playlist.items.map((item, index) => {
                     return (
                         <div key={index} className='playlists'>
@@ -39,7 +40,7 @@ export default function AddToPlaylist(props) {
                 }));
             })
             .catch(err => console.log(err));
-    }, [profile, props.token, playlist, handleClick]);
+    }, [profile]);
 
     return (
         <div>
