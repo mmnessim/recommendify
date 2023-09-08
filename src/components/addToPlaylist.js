@@ -1,21 +1,24 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import SelectPlaylist from './selectPlaylist';
+import store from '../redux/store';
 
 export default function AddToPlaylist(props) {
     const [playlist, setPlaylist] = useState(null);
     const [display, setDisplay] = useState(null);
     const [selected, setSelected] = useState(null);
     const [playlistID, setPlaylistID] = useState(null);
+    const profile = store.getState().profile;
 
-    function handleClick(index) {
-        console.log(index)
-        //setPlaylistID(playlist[index].id);
-        console.log(playlist.items[index])
+    const handleClick = useCallback((index) => {
+        //console.log(index)
+        //console.log(playlist.items[index])
         setPlaylistID(playlist.items[index].id);
         setSelected(true);
-    }
+    }, [playlist]);
 
-    function getPlaylist() {
+    //Get all playlists
+    useEffect(() => {
+        //getPlaylist();
         fetch('https://api.spotify.com/v1/me/playlists', {
             headers: {
                 Authorization: 'Bearer ' + props.token
@@ -25,7 +28,7 @@ export default function AddToPlaylist(props) {
             .then(data => {
                 console.log("Data" + data.items);
                 setPlaylist(data);
-                /*
+                
                 setDisplay(playlist.items.map((item, index) => {
                     return (
                         <div key={index} className='playlists'>
@@ -33,32 +36,20 @@ export default function AddToPlaylist(props) {
                             <button className='btn' onClick={() => {handleClick(index)}}>+</button>
                         </div>
                     )
-                }));*/
+                }));
             })
             .catch(err => console.log(err));
-    }
-
-    useEffect(() => {
-        getPlaylist();
-    }, []);
-
-    useEffect(() => {
-        if (playlist) {
-        setDisplay(playlist.items.map((item, index) => {
-            return (
-                <div key={index} className='playlists'>
-                    <a className='' href={item.external_urls.spotify} target="_blank" rel="noreferrer">{item.name}   </a>
-                    <button className='btn' onClick={() => {handleClick(index)}}>+</button>
-                </div>
-            )
-        }));
-    }
-    }, [playlist]);
-
+    }, [profile, props.token, playlist, handleClick]);
 
     return (
         <div>
             <h1>Add to playlist</h1>
+            {!display &&
+            <div>
+                <p>Loading...</p>
+            </div>
+            }
+
             { !selected &&
             display}
             {selected &&

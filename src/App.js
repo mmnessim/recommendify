@@ -65,8 +65,11 @@ function App() {
   }
 
   useEffect(() => {
-    dispatchLogin();
-    dispatchToken();
+    if (profile) {
+      dispatchLogin();
+      dispatchToken();
+    }
+
   }, [profile]);
 
   return (
