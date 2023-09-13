@@ -29,7 +29,7 @@ function App() {
         console.log(data);
         setToken(null);
         setProfile(null);
-        store.dispatch({
+store.dispatch({
           type: 'profile/logout'
         })
       })
@@ -77,7 +77,7 @@ function App() {
       <div classname="navbar navbar-inverse navbar-fixed-top" id='nav'>
         <button className='btn' onClick={handleLogin}>Login with Spotify</button>
         <button className='btn' onClick={handleLogout}>Logout</button>
-        <button className='btn' onClick={dispatchLogin}>Update store</button>
+<button className='btn' onClick={dispatchLogin}>Update store</button>
       </div>
       <div className="jumbotron"><h1>Recommendify</h1></div>
       { profile &&
@@ -85,7 +85,7 @@ function App() {
         <Profile profile={profile} token={token} />
       </div>
        }
-      {
+{
         store.getState().profile.displayName &&
         <div>
           <h1>Redux</h1>

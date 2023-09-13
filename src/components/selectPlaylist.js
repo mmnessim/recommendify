@@ -27,19 +27,25 @@ export default function SelectPlaylist(props) {
             setDisplay(playlist.tracks.items.map((item, index) => {
                 return (
                     <div key={index} className='playlists'>
-                        something
+                        <p>{item.track.name} by {item.track.artists[0].name}</p>
                     </div>
                 )
             }));
         }
     }, [playlist]);
-    
+
 
 
 
     return(
         <div>
-            <p>Playlist</p>
+            {
+                playlist &&
+                <div>
+                    <h3>{playlist.name}</h3>
+                </div>
+            }
+            {display}
         </div>
     )
 }
