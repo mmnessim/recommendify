@@ -42,6 +42,7 @@ export default function AddToPlaylist(props) {
             .catch(err => console.log(err));
     }, [profile]);
 
+
     return (
         <div>
             <h1>Add to playlist</h1>
