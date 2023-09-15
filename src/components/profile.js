@@ -1,7 +1,5 @@
 import React from "react";
 import Recommendations from "./recommendations";
-import CreatePlaylist from "./createPlaylist";
-import AddToPlaylist from "./addToPlaylist";
 import PlaylistContainer from "./playlistContainer";
 
 export default function Profile(props) {
