@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Profile from './components/profile';
 import store from './redux/store';
-import { handleLogout, handleLogin, dispatchLogin, dispatchToken } from './helper/storeFunctions/loginLogout';
 
 
 function App() {
@@ -20,6 +19,50 @@ function App() {
       })
       .catch(err => console.log(err));
   }, []);
+
+  function handleLogout() {
+    fetch('http://localhost:3001/logout', {
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setToken(null);
+        setProfile(null);
+        store.dispatch({
+          type: 'profile/logout'
+        })
+      })
+  }
+
+  function handleLogin() {
+    window.location.href = 'http://localhost:3001/auth/spotify';
+  }
+
+  function dispatchLogin() {
+    if (profile) {
+      store.dispatch({
+        type: 'profile/login',
+        payload: {
+          displayName: profile.displayName,
+          username: profile.id,
+          id: profile.id
+        }
+      })
+      console.log(store.getState())
+    }}
+
+  function dispatchToken() {
+    if (token) {
+      store.dispatch({
+        type: 'token/login',
+        payload: {
+          token: token
+        }
+      })
+      console.log(store.getState())
+    }
+  }
 
   useEffect(() => {
     if (profile) {
