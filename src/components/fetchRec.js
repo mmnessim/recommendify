@@ -7,7 +7,6 @@ export default function FetchRec(props) {
     const [display, setDisplay] = useState([]);
 
     useEffect(() => {
-        setRecs(null);
         fetch('https://api.spotify.com/v1/recommendations?seed_artists=' + props.artistID, {
             headers: {
                 Authorization: 'Bearer ' + props.token
@@ -22,7 +21,6 @@ export default function FetchRec(props) {
     }, [props.artistID]);
 
     useEffect(() => {
-        setDisplay([[]]);
         if (recs) {
             setDisplay(recs.map((rec, index) => {
                 return (
@@ -36,7 +34,7 @@ export default function FetchRec(props) {
                 )
             }))
         }
-    }, [recs, props.artistID]);
+    }, [recs]);
 
     return(
         <div>
