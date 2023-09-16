@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from "react";
 import store from "../redux/store";
+import { getPlaylist } from "../helper/getPlaylist";
 
 export default function SelectPlaylist(props) {
     const [playlist, setPlaylist] = useState(null);
     const [display, setDisplay] = useState(null);
 
+    /*
     function getPlaylist() {
         fetch(`https://api.spotify.com/v1/playlists/${props.playlistID}`, {
             headers: {
@@ -18,9 +20,10 @@ export default function SelectPlaylist(props) {
             })
             .catch(err => console.log(err));
     }
+    */
 
     useEffect(() => {
-        getPlaylist();
+        getPlaylist(props, setPlaylist);
     }, []);
 
     // Set playlist ID in store
