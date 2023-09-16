@@ -1,22 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import { getPlaylist } from '../helper/getPlaylist';
 
 export default function ShowPlaylist(props) {
     const [playlist, setPlaylist] = useState(null);
     const [playlistTracks, setPlaylistTracks] = useState(null);
-
-    function getPlaylist() {
-        fetch('https://api.spotify.com/v1/playlists/' + props.playlist, {
-            headers: {
-                Authorization: 'Bearer ' + props.token
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setPlaylist(data);
-            })
-            .catch(err => console.log(err));
-    }
 
     useEffect(() => {
         if (playlist) {
@@ -31,13 +18,11 @@ export default function ShowPlaylist(props) {
             }))
         }
     }, [playlist]);
-    
-
 
     return (
         <div>
             <h1>Playlist</h1>
-            <button onClick={getPlaylist}>Get playlist</button>
+            <button onClick={() => {getPlaylist(props, setPlaylist)}}>Get playlist</button>
             { playlist &&
             <div>
                 <p>Playlist name: {playlist.name}</p>
