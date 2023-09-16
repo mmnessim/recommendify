@@ -6,6 +6,7 @@ import store from './redux/store';
 function App() {
   const [token, setToken] = useState(null);
   const [profile, setProfile] = useState(null);
+  const state = store.getState();
 
   useEffect(() => {
     fetch('http://localhost:3001/', {
@@ -89,11 +90,11 @@ function App() {
         store.getState().profile.displayName !== "John Doe" &&
         <div>
           <h1>Redux</h1>
-          <p>Display name: {store.getState().profile.displayName}</p>
-          <p>Username: {store.getState().profile.username}</p>
-          <p>ID: {store.getState().profile.id}</p>
-          <p>Token: {store.getState().token.token}</p>
-          <p>PlaylistID: {store.getState().playlistID.playlistID}</p>
+          <p>Display name: {state.profile.displayName}</p>
+          <p>Username: {state.profile.username}</p>
+          <p>ID: {state.profile.id}</p>
+          <p>Token: {state.token.token}</p>
+          <p>PlaylistID: {state.playlistID.playlistID}</p>
         </div>
       }
 
