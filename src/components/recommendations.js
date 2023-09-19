@@ -30,7 +30,7 @@ export default function Recommendations(props) {
             <button className="btn" onClick={getID}>Get Recommendations</button>
             { artistID &&
             <div>
-                <FetchRec token={props.token} artistID={artistID} />
+                <FetchRec artistID={artistID} />
             </div>
             }
         </div>
