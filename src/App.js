@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Profile from './components/profile';
 import store from './redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function App() {
-  const [token, setToken] = useState(null);
-  const [profile, setProfile] = useState(null);
-  const state = store.getState();
+  const reduxProfile = useSelector(state => state.profile);
+  const reduxToken = useSelector(state => state.token.token);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!profile && !token) {
+    if (reduxProfile.displayName === "John Doe") {
     fetch('http://localhost:3001/', {
       credentials: 'include'
     })
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        setToken(data.accessToken);
-        setProfile(data.profile);
-        store.dispatch({
+        dispatch({
           type: 'profile/login',
           payload: {
             displayName: data.profile.displayName,
@@ -26,7 +25,7 @@ function App() {
             id: data.profile.id
           }
         });
-        store.dispatch({
+        dispatch({
           type: 'token/login',
           payload: {
             token: data.accessToken
@@ -35,11 +34,9 @@ function App() {
       })
       .catch(err => {
         console.log(err);
-        setProfile(null);
-        setToken(null);
       });
     }
-  }, [profile, token]);
+  }, [reduxProfile, reduxToken]);
 
   function handleLogout() {
     fetch('http://localhost:3001/logout', {
@@ -48,8 +45,6 @@ function App() {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        setToken(null);
-        setProfile(null);
         store.dispatch({
           type: 'profile/logout'
         })
@@ -60,44 +55,18 @@ function App() {
     window.location.href = 'http://localhost:3001/auth/spotify';
   }
 
-  function dispatchLogin() {
-    if (profile) {
-      store.dispatch({
-        type: 'profile/login',
-        payload: {
-          displayName: profile.displayName,
-          username: profile.id,
-          id: profile.id
-        }
-      })
-      console.log(store.getState())
-    }}
-
-  function dispatchToken() {
-    if (token) {
-      store.dispatch({
-        type: 'token/login',
-        payload: {
-          token: token
-        }
-      })
-      console.log(store.getState())
-    }
-  }
-
   return (
     <div className="App">
       <div classname="navbar navbar-inverse navbar-fixed-top" id='nav'>
         <button className='btn' onClick={handleLogin}>Login with Spotify</button>
         <button className='btn' onClick={handleLogout}>Logout</button>
-        <button className='btn' onClick={dispatchLogin}>Update store</button>
       </div>
-      <p>token: {token}</p>
-      <p>profile: {profile && profile.displayName}</p>
+      <p>token: {reduxToken}</p>
+      <p>profile: {reduxProfile && reduxProfile.displayName}</p>
       <div className="jumbotron"><h1>Recommendify</h1></div>
-      { profile &&
+      { reduxProfile.displayName !== "John Doe" &&
       <div>
-        <Profile profile={profile} token={token} />
+        <Profile profile={reduxProfile} token={reduxToken} />
       </div>
        }
     </div>
