@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import Profile from './components/profile';
-import store from './redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -45,7 +44,7 @@ function App() {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        store.dispatch({
+        dispatch({
           type: 'profile/logout'
         })
       })
@@ -65,9 +64,7 @@ function App() {
       <p>profile: {reduxProfile && reduxProfile.displayName}</p>
       <div className="jumbotron"><h1>Recommendify</h1></div>
       { reduxProfile.displayName !== "John Doe" &&
-      <div>
-        <Profile profile={reduxProfile} token={reduxToken} />
-      </div>
+        <Profile /> 
        }
     </div>
   );
