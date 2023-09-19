@@ -92,6 +92,8 @@ function App() {
         <button className='btn' onClick={handleLogout}>Logout</button>
         <button className='btn' onClick={dispatchLogin}>Update store</button>
       </div>
+      <p>token: {token}</p>
+      <p>profile: {profile && profile.displayName}</p>
       <div className="jumbotron"><h1>Recommendify</h1></div>
       { profile &&
       <div>

@@ -20,28 +20,35 @@ export default function AddToPlaylist(props) {
 
     //Get all playlists
     useEffect(() => {
-        //getPlaylist();
+        if (!props.token && !props.profile) {
+            setDisplay(null);
+        } else if (token && profile && !playlist) {
         fetch('https://api.spotify.com/v1/me/playlists', {
             headers: {
-                Authorization: 'Bearer ' + props.token
+                Authorization: 'Bearer ' + token
             }
         })
             .then(res => res.json())
             .then(data => {
                 console.log("Data" + data.items);
                 setPlaylist(data);
-                setDisplay(playlist.items.map((item, index) => {
-                    return (
-                        <div key={index} className='playlists'>
-                            <a className='' href={item.external_urls.spotify} target="_blank" rel="noreferrer">{item.name}   </a>
-                            <button className='btn' onClick={() => {handleClick(index)}}>+</button>
-                        </div>
-                    )
-                }));
             })
             .catch(err => console.log(err));
-    }, [profile]);
+        }
+    }, [props.token, props.profile]);
 
+    useEffect(() => {
+        if (playlist) {
+            setDisplay(playlist.items.map((item, index) => {
+                return (
+                    <div key={index} className='playlists'>
+                        <a className='' href={item.external_urls.spotify} target="_blank" rel="noreferrer">{item.name}   </a>
+                        <button className='btn' onClick={() => {handleClick(index)}}>+</button>
+                    </div>
+                )
+            }));
+        }
+}, [playlist]);
 
     return (
         <div>
