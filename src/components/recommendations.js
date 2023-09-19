@@ -1,14 +1,17 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import FetchRec from "./fetchRec";
+import { useSelector } from "react-redux";
 
 export default function Recommendations(props) {
     const [artistID, setArtistID] = useState(null);
     const [query, setQuery] = useState(null);
 
+    const token = useSelector((state) => state.token.token);
+
     function getID() {
         fetch('https://api.spotify.com/v1/search?q=' + query + '&type=artist', {
             headers: {
-                Authorization: 'Bearer ' + props.token
+                Authorization: 'Bearer ' + token
             }
         })
             .then(res => res.json())

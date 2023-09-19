@@ -3,7 +3,7 @@ import Recommendations from "./recommendations";
 import PlaylistContainer from "./playlistContainer";
 import { useSelector } from "react-redux";
 
-export default function Profile(props) {
+export default function Profile() {
     const profile = useSelector((state) => state.profile);
     const token = useSelector((state) => state.token.token);
 
@@ -18,7 +18,7 @@ export default function Profile(props) {
             </div>
             <div className="row">
                 <div className="col-sm">
-                    <Recommendations token={token} />
+                    <Recommendations />
                 </div>
                 <div className="col-sm">
                     <PlaylistContainer token={token} profile={profile}/>

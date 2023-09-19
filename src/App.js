@@ -9,13 +9,15 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //Get user data from backend only if we don't have it already
     if (reduxProfile.displayName === "John Doe") {
     fetch('http://localhost:3001/', {
       credentials: 'include'
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
+        //Dispatch to redux
         dispatch({
           type: 'profile/login',
           payload: {
