@@ -1,22 +1,19 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import SelectPlaylist from './selectPlaylist';
-import store from '../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function AddToPlaylist(props) {
     const token = useSelector((state) => state.token.token);
+    const profile = useSelector((state) => state.profile);
 
     const [playlist, setPlaylist] = useState(null);
     const [display, setDisplay] = useState(null);
     const [selected, setSelected] = useState(null);
     const [playlistID, setPlaylistID] = useState(null);
-    //Variables from store
-    const profile = store.getState().profile;
+
     const dispatch = useDispatch();
 
     const handleClick = useCallback((index) => {
-        //console.log(index)
-        //console.log(playlist.items[index])
         setPlaylistID(playlist.items[index].id);
         dispatch({type: 'playlistID/login', payload: playlist.items[index].id});
         setSelected(true);

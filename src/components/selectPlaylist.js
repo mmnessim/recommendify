@@ -21,9 +21,6 @@ export default function SelectPlaylist(props) {
         }
     }, [playlist]);
 
-
-
-
     return(
         <div>
             {
