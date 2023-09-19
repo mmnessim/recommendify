@@ -9,6 +9,7 @@ function App() {
   const state = store.getState();
 
   useEffect(() => {
+    if (!profile && !token) {
     fetch('http://localhost:3001/', {
       credentials: 'include'
     })
@@ -17,9 +18,28 @@ function App() {
         console.log(data);
         setToken(data.accessToken);
         setProfile(data.profile);
+        store.dispatch({
+          type: 'profile/login',
+          payload: {
+            displayName: data.profile.displayName,
+            username: data.profile.id,
+            id: data.profile.id
+          }
+        });
+        store.dispatch({
+          type: 'token/login',
+          payload: {
+            token: data.accessToken
+          }
+        });
       })
-      .catch(err => console.log(err));
-  }, []);
+      .catch(err => {
+        console.log(err);
+        setProfile(null);
+        setToken(null);
+      });
+    }
+  }, [profile, token]);
 
   function handleLogout() {
     fetch('http://localhost:3001/logout', {
@@ -65,14 +85,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    if (profile) {
-      dispatchLogin();
-      dispatchToken();
-    }
-
-  }, [profile]);
-
   return (
     <div className="App">
       <div classname="navbar navbar-inverse navbar-fixed-top" id='nav'>
@@ -86,18 +98,6 @@ function App() {
         <Profile profile={profile} token={token} />
       </div>
        }
-      {
-        store.getState().profile.displayName !== "John Doe" &&
-        <div>
-          <h1>Redux</h1>
-          <p>Display name: {state.profile.displayName}</p>
-          <p>Username: {state.profile.username}</p>
-          <p>ID: {state.profile.id}</p>
-          <p>Token: {state.token.token}</p>
-          <p>PlaylistID: {state.playlistID.playlistID}</p>
-        </div>
-      }
-
     </div>
   );
 }
