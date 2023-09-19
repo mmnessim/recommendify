@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import ShowPlaylist from './showPlaylist';
+import { useSelector } from 'react-redux';
 
 export default function CreatePlaylist(props) {
-    const profile = props.profile;
+    const profile = useSelector((state) => state.profile);
+    const token = useSelector((state) => state.token.token);
+    
     const [playlistName, setPlaylistName] = useState(null);
     const [playlistDescription, setPlaylistDescription] = useState(null); // optional
     const [playlistID, setPlaylistID] = useState(null);
@@ -47,7 +50,7 @@ export default function CreatePlaylist(props) {
             { playlistID &&
             <div>
                 <p>Playlist ID: {playlistID}</p>
-                <ShowPlaylist token={props.token} playlist={playlistID} />
+                <ShowPlaylist token={token} playlist={playlistID} />
             </div>
             }
         </div>
