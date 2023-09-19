@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 export default function AddToPlaylist(props) {
     const token = useSelector((state) => state.token.token);
-    const profile = useSelector((state) => state.profile);
 
     const [playlist, setPlaylist] = useState(null);
     const [display, setDisplay] = useState(null);
@@ -14,16 +13,15 @@ export default function AddToPlaylist(props) {
     const dispatch = useDispatch();
 
     const handleClick = useCallback((index) => {
+        console.log(playlist.items[index].id);
         setPlaylistID(playlist.items[index].id);
-        dispatch({type: 'playlistID/login', payload: playlist.items[index].id});
+        dispatch({type: 'playlistID/login', payload: {playlistID: playlist.items[index].id}});
         setSelected(true);
     }, [playlist]);
 
     //Get all playlists
     useEffect(() => {
-        if (!props.token && !props.profile) {
-            setDisplay(null);
-        } else if (token && !playlist) {
+        if (token && !playlist) {
         fetch('https://api.spotify.com/v1/me/playlists', {
             headers: {
                 Authorization: 'Bearer ' + token
