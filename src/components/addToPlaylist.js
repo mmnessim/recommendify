@@ -23,7 +23,7 @@ export default function AddToPlaylist(props) {
     useEffect(() => {
         if (!props.token && !props.profile) {
             setDisplay(null);
-        } else if (token && profile && !playlist) {
+        } else if (token && !playlist) {
         fetch('https://api.spotify.com/v1/me/playlists', {
             headers: {
                 Authorization: 'Bearer ' + token
@@ -31,8 +31,11 @@ export default function AddToPlaylist(props) {
         })
             .then(res => res.json())
             .then(data => {
-                console.log("Data" + data.items);
-                setPlaylist(data);
+                console.log(data.items);
+                if (data.error) {
+                    console.log(data.error.message);
+                    setPlaylist(null);
+                } else setPlaylist(data);
             })
             .catch(err => console.log(err));
         }
@@ -50,6 +53,10 @@ export default function AddToPlaylist(props) {
             }));
         }
 }, [playlist]);
+
+    useEffect(() => {
+        console.log(playlist)
+    }, [playlist]);
 
     return (
         <div>
