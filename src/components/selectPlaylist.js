@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import store from "../redux/store";
 import { getPlaylist } from "../helper/getPlaylist";
 
 export default function SelectPlaylist(props) {
@@ -9,17 +8,6 @@ export default function SelectPlaylist(props) {
     useEffect(() => {
         getPlaylist(props, setPlaylist);
     }, []);
-
-    // Set playlist ID in store
-    useEffect(() => {
-                store.dispatch({
-                    type: 'playlistID/login',
-                    payload: {
-                        playlistID: props.playlistID
-                    }
-                })
-                console.log(store.getState())
-        }, [props.playlistID])
 
     useEffect(() => {
         if (playlist) {
