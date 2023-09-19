@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import ShowPlaylist from './showPlaylist';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function CreatePlaylist(props) {
     const profile = useSelector((state) => state.profile);
     const token = useSelector((state) => state.token.token);
+    const dispatch = useDispatch();
     
     const [playlistName, setPlaylistName] = useState(null);
     const [playlistDescription, setPlaylistDescription] = useState(null); // optional
@@ -26,6 +27,7 @@ export default function CreatePlaylist(props) {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                dispatch({type: 'playlistID/login', payload: data.id});
                 setPlaylistID(data.id);
                 if (data.error) {
                     setError(data.error.message);

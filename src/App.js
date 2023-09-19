@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function App() {
   const reduxProfile = useSelector(state => state.profile);
   const reduxToken = useSelector(state => state.token.token);
+  const playlistID = useSelector(state => state.playlistID.playlistID);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,6 +65,7 @@ function App() {
       </div>
       <p>token: {reduxToken}</p>
       <p>profile: {reduxProfile && reduxProfile.displayName}</p>
+      <p>playlistID: {playlistID} </p>
       <div className="jumbotron"><h1>Recommendify</h1></div>
       { reduxProfile.displayName !== "John Doe" &&
         <Profile /> 
