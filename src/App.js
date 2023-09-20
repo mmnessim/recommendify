@@ -39,7 +39,7 @@ function App() {
         console.log(err);
       });
     }
-  }, [reduxProfile, reduxToken]);
+  }, [reduxProfile, reduxToken, dispatch]);
 
   function handleLogout() {
     fetch('http://localhost:3001/logout', {

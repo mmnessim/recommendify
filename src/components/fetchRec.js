@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { SongDetails } from './songDetails';
 import { useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ export default function FetchRec(props) {
     const token = useSelector((state) => state.token.token);
     const playlistID = useSelector((state) => state.playlistID.playlistID);
 
-    function addToPlaylist(song) {
+    const addToPlaylist = useCallback((song) => {
         fetch(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`, {
             method: 'POST',
             headers: {
@@ -24,7 +24,7 @@ export default function FetchRec(props) {
             .then(res => res.json())
             .then(data => console.log(data))
             .catch(err => console.log(err));
-    }
+    }, [playlistID, token]);
 
     useEffect(() => {
         fetch('https://api.spotify.com/v1/recommendations?seed_artists=' + props.artistID, {
@@ -38,7 +38,7 @@ export default function FetchRec(props) {
                 setRecs(data.tracks);
             })
             .catch(err => console.log(err));
-    }, [props.artistID]);
+    }, [props.artistID, token]);
 
     useEffect(() => {
         if (recs) {
@@ -56,7 +56,7 @@ export default function FetchRec(props) {
                 )
             }))
         }
-    }, [recs]);
+    }, [recs, token, addToPlaylist]);
 
 
     return(
