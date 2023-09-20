@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 export default function FetchRec(props) {
     const [recs, setRecs] = useState(null);
     const [display, setDisplay] = useState([]);
+    const [message, setMessage] = useState(null);
 
     const token = useSelector((state) => state.token.token);
     const playlistID = useSelector((state) => state.playlistID.playlistID);
@@ -22,7 +23,14 @@ export default function FetchRec(props) {
             })
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+                if (data.snapshot_id) {
+                    setMessage('Song added successfully!')
+                } else if (data.error) {
+                    setMessage('Error: ' + data.error.message)
+                }
+            })
             .catch(err => console.log(err));
     }, [playlistID, token]);
 
@@ -62,6 +70,7 @@ export default function FetchRec(props) {
     return(
         <div>
             <p>Recommendations</p>
+            {message && <p>{message}</p>}
             {display}
         </div>
     )
