@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Profile from './components/profile';
 import { useDispatch, useSelector } from 'react-redux';
+import About from './components/about';
 
 
 function App() {
@@ -63,10 +64,11 @@ function App() {
         <button className='btn' onClick={handleLogin}>Login with Spotify</button>
         <button className='btn' onClick={handleLogout}>Logout</button>
       </div>
-      <p>token: {reduxToken}</p>
-      <p>profile: {reduxProfile && reduxProfile.displayName}</p>
-      <p>playlistID: {playlistID} </p>
+          <p>token: {reduxToken}</p>
+          <p>profile: {reduxProfile && reduxProfile.displayName}</p>
+          <p>playlistID: {playlistID} </p>
       <div className="jumbotron"><h1>Recommendify</h1></div>
+      <About />
       { reduxProfile.displayName !== "John Doe" &&
         <Profile /> 
        }
