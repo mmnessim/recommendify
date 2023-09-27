@@ -7,7 +7,6 @@ import About from './components/about';
 function App() {
   const reduxProfile = useSelector(state => state.profile);
   const reduxToken = useSelector(state => state.token.token);
-  const playlistID = useSelector(state => state.playlistID.playlistID);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,9 +63,6 @@ function App() {
         <button className='btn' onClick={handleLogin}>Login with Spotify</button>
         <button className='btn' onClick={handleLogout}>Logout</button>
       </div>
-          <p>token: {reduxToken}</p>
-          <p>profile: {reduxProfile && reduxProfile.displayName}</p>
-          <p>playlistID: {playlistID} </p>
       <div className="jumbotron"><h1>Recommendify</h1></div>
       <About />
       { reduxProfile.displayName !== "John Doe" &&
